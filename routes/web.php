@@ -31,10 +31,12 @@ use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\NewStockMovesController;
 use App\Http\Controllers\StockMovesReturnController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingsController;
 use App\Http\Controllers\WorkCenterController;
 use App\Http\Controllers\NotificationLogsController;
+use App\Http\Controllers\MessageController;
 
 
 /*
@@ -241,15 +243,16 @@ Route::get('/openMaterialRequestInfo', function () {
 });
 
 /**MESSAGING ROUTES */
-Route::get('/inbox', function () {
-    return view('modules.messaging.inbox');
-});
+Route::get('/inbox', [ChatController::class, 'index']);
 Route::get('/important', function () {
     return view('modules.messaging.important');
 });
 Route::get('/archived', function () {
     return view('modules.messaging.archived');
 });
+
+Route::resource("/message", MessageController::class);
+Route::resource("/chat", ChatController::class);
 
 /**OPERATIONS ROUTES */
 Route::resource('/operations', OperationsController::class)->parameters(['operations' => 'id']);
